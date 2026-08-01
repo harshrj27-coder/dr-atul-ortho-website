@@ -1,0 +1,13 @@
+{
+  "name": "Dr. Atul Rai Sharma — Orthopaedics & Joint Replacement",
+  "short_name": "Dr. Atul Sharma",
+  "description": "Consultant Orthopaedics & Joint Replacement Surgeon in Jalandhar — robotic knee, hip & shoulder replacement, arthroscopy, sports injury and trauma care.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0057D9",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
