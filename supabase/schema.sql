@@ -11,8 +11,13 @@ create table if not exists appointments (
     concern         varchar(100),
     message         text,
     status          varchar(20)  not null default 'new', -- new | confirmed | completed | cancelled
+    payment_status  varchar(20)  not null default 'pending', -- pending | paid | cash
     created_at      timestamptz  not null default now()
 );
+
+-- If this table already existed before payment_status was added, this
+-- backfills it safely (no-op if the column is already there).
+alter table appointments add column if not exists payment_status varchar(20) not null default 'pending';
 
 create index if not exists idx_appointments_created_at on appointments (created_at desc);
 create index if not exists idx_appointments_status on appointments (status);
