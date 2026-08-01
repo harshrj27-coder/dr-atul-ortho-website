@@ -1,13 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Preloader from "@/components/Preloader";
-import CursorGlow from "@/components/CursorGlow";
-import EmergencyBar from "@/components/EmergencyBar";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import SiteChrome from "@/components/SiteChrome";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -95,12 +91,7 @@ export default function RootLayout({
       <body className="font-body antialiased bg-white text-[#0b0f1a]" suppressHydrationWarning>
         <SmoothScrollProvider>
           <ServiceWorkerRegister />
-          <Preloader />
-          <CursorGlow />
-          <Navbar />
-          <main>{children}</main>
-          <EmergencyBar />
-          <Footer />
+          <SiteChrome>{children}</SiteChrome>
         </SmoothScrollProvider>
       </body>
     </html>
