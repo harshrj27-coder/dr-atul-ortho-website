@@ -9,7 +9,7 @@
  * (JointNode) will keep working as long as you keep a mesh at each joint.
  */
 
-import { Suspense, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Html, OrbitControls, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
@@ -207,21 +207,35 @@ function SkeletonModel() {
 }
 
 export default function SkeletonScene() {
+  // Shadow maps + ContactShadows + a high device-pixel-ratio are the most
+  // expensive parts of this scene, and mobile GPUs (especially mid-range
+  // Android phones) struggle with them. Detect small/touch screens once on
+  // mount and render a lighter version there — same model, same
+  // interactivity, just without the costly shadow passes.
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px), (pointer: coarse)");
+    setIsMobile(mq.matches);
+  }, []);
+
   return (
     <Canvas
-      shadows
+      shadows={!isMobile}
       camera={{ position: [0, 1, 5.2], fov: 40 }}
-      dpr={[1, 1.75]}
-      gl={{ antialias: true, alpha: true }}
+      dpr={isMobile ? 1 : [1, 1.75]}
+      gl={{ antialias: !isMobile, alpha: true }}
     >
       <ambientLight intensity={0.7} />
-      <directionalLight position={[3, 5, 4]} intensity={1.1} castShadow />
+      <directionalLight position={[3, 5, 4]} intensity={1.1} castShadow={!isMobile} />
       <pointLight position={[-3, 1, 2]} intensity={0.6} color="#0057D9" />
       <pointLight position={[3, -1, -2]} intensity={0.5} color="#D4AF37" />
 
       <Suspense fallback={null}>
         <SkeletonModel />
-        <ContactShadows position={[0, -1.85, 0]} opacity={0.35} scale={6} blur={2.4} far={2} />
+        {!isMobile && (
+          <ContactShadows position={[0, -1.85, 0]} opacity={0.35} scale={6} blur={2.4} far={2} />
+        )}
       </Suspense>
 
       <OrbitControls
