@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import SiteChrome from "@/components/SiteChrome";
 
-const playfair = Playfair_Display({
+const playfair = Fraunces({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
   display: "swap",
